@@ -211,11 +211,6 @@
     
     
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find setup_simulator)/rviz/denso.rviz" required="true" />
-    
-    
-    
-    
-    
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
     <rosparam file="$(find setup_simulator)/config/ur3e_gripper.yaml" command="load"/>
     <node pkg="controller_manager" type="controller_manager" name="ros_controller_manager" respawn="false" output="screen" args="spawn arm_controller gripper"/>
@@ -226,43 +221,7 @@
     <node pkg="setup_simulator" type="tf_publisher" name="tf_publish" />
     <arg name="sub_topic_name" default="/photoneo_center/sensor/points"/>
     <arg name="distance_threshold" default="0.001"/>
-    
-    <!-- <node pkg="setup_simulator" type="cloud_planar_segmenter" name="cloud_planar_segmenter">
-        <param name="sub_topic_name" value="$(arg sub_topic_name)"/>
-        <param name="distance_threshold" value="$(arg distance_threshold)"/>
-    </node> -->
-
-
-
-
-
-
-<!-- 
-    <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/>
-    <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/>
-    <arg name="target_frame" default="HV8"/>
-    <arg name="source_frame" default="photoneo_center_optical_frame"/>
-    <arg name="f_scale" default="0.5"/>
-    <arg name="cx_scale" default="0.99"/>
-    <arg name="cy_scale" default="0.9"/>
-    <arg name="radious" default="0.05"/>
-    <arg name="image_dir_name" default="/home/ericlab/yolo_ganbare/images"/>
-    <arg name="filebasename" default="tsuchida"/>
-    <arg name="model_name" default="HV8"/>
-    <arg name="world_frame" default="base_link"/>
-    <arg name="label_dir_name" default="/home/ericlab/yolo_ganbare/labels"/>
-    <arg name="boxes_dir_name" default="/home/ericlab/yolo_ganbare/boxes"/>
-    <arg name="the_number_of_data" default="10"/>
-    <arg name="service_name" default="message_service"/>
-    <arg name="occuluder_service_name" default="tsuchida_oculution_service"/> -->
-    
-    
-    
-    
    
-    <!-- <node pkg="yolo_annotation" type="move_object_yolo_kai.py" name="move_object_yolo">
-        <param name="model_name" value="$(arg model_name)"/>
-    </node> -->
 
     <node pkg="yolo_annotation" type="message_casher" name="message_casher" output="screen">
         <param name="image_topic" value="$(arg image_topic_name)"/>
