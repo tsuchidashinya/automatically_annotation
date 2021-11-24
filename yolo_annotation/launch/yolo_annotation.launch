@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/>
+    <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/>
+    <arg name="target_frame" default="HV8"/>
+    <arg name="source_frame" default="photoneo_center_optical_frame"/>
+    <arg name="f_scale" default="0.5"/>
+    <arg name="cx_scale" default="0.99"/>
+    <arg name="cy_scale" default="0.9"/>
+    <arg name="radious" default="0.05"/>
+    <arg name="image_dir_name" default="/home/ericlab/yolo_suiron/images"/>
+    <arg name="filebasename" default="tsuchida"/>
+    <arg name="model_name" default="HV8"/>
+    <arg name="world_frame" default="base_link"/>
+    <arg name="label_dir_name" default="/home/ericlab/yolo_suiron/labels"/>
+    <arg name="boxes_dir_name" default="/home/ericlab/yolo_suiron/boxes"/>
+    <arg name="the_number_of_data" default="10"/>
+    <arg name="occulution_message_topic_name" default="/tsuchida_object_occuluder"/>
+    
+    
+    
+    <node pkg="yolo_annotation" type="yolo_annotation_kai" name="colored_pointcloud11" output="screen">
+        <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+        <param name="image_topic_name" value="$(arg image_topic_name)"/>
+        <param name="target_frame" value="$(arg target_frame)"/>
+        <param name="source_frame" value="$(arg source_frame)"/>
+        <param name="f_scale" value="$(arg f_scale)"/>
+        <param name="cx_scale" value="$(arg cx_scale)"/>
+        <param name="cy_scale" value="$(arg cy_scale)"/>
+        <param name="radious" value="$(arg radious)"/>
+        <param name="image_dir_name" value="$(arg image_dir_name)"/>
+        <param name="filebasename" value="$(arg filebasename)"/>
+        <param name="model_name" value="$(arg model_name)"/>
+        <param name="world_frame" value="$(arg world_frame)"/>
+        <param name="label_dir_name" value="$(arg label_dir_name)"/>
+        <param name="boxes_dir_name" value="$(arg boxes_dir_name)"/>
+        <param name="the_number_of_data" value="$(arg the_number_of_data)"/>
+        <param name="occulution_message_topic_name" value="$(arg occulution_message_topic_name)"/>
+    </node>
+
+    <node pkg="yolo_annotation" type="move_object_yolo_kai.py" name="move_object_yolo">
+        <param name="model_name" value="$(arg model_name)"/>
+    </node>
+</launch>

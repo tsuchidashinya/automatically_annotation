@@ -1,0 +1,5 @@
+denso_msgs/new_1_array[] out_data
+std_msgs/Int32MultiArray[] Bbox_data
+sensor_msgs/Image input_img
+---
+std_msgs/Int32MultiArray[] Bbox_data_occluder

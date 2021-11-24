@@ -1,0 +1,5 @@
+bool call
+---
+sensor_msgs/Image image 
+sensor_msgs/CameraInfo camera_info
+denso_msgs/out_segmentation out_point

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="object_name" default="HV8"/>
+    <group if="$(eval object_name=='HV8')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find setup_simulator)/world/haji_simple.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+        </include>
+    </group>
+    <arg name="pi" default="3.141592"/>
+    
+    <arg name="use_sensor_type" default="phoxi_camera"/>
+    <arg name="gui" default="true"/>
+    <param name="use_gui" value="$(arg gui)"/>
+    <arg name="model" value="$(find setup_simulator)/urdf/ur3_and_phoxi.urdf.xacro"/>
+    
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find setup_simulator)/rviz/denso.rviz" required="true" />
+    
+    
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model) yaw:=0"/>
+    
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" output="screen" args="-param robot_description -urdf -model ur_and_sensor" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
+    <rosparam file="$(find setup_simulator)/config/ur3e_gripper.yaml" command="load"/>
+    <node pkg="controller_manager" type="controller_manager" name="ros_controller_manager" respawn="false" output="screen" args="spawn arm_controller gripper"/>
+    <rosparam file="$(find setup_simulator)/config/joint_state_controller.yaml" command="load"/>
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
+    <node pkg="setup_simulator" type="arm_control.py" name="arm_control" />
+
+    <node pkg="setup_simulator" type="tf_publisher" name="tf_publish" />
+    <arg name="sub_topic_name" default="/photoneo_center/sensor/points"/>
+    <arg name="distance_threshold" default="0.001"/>
+    
+    <node pkg="setup_simulator" type="cloud_planar_segmenter" name="cloud_planar_segmenter">
+        <param name="sub_topic_name" value="$(arg sub_topic_name)"/>
+        <param name="distance_threshold" value="$(arg distance_threshold)"/>
+    </node>
+</launch>
+    

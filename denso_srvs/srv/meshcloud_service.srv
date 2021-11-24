@@ -1,0 +1,3 @@
+int32 mesh_index
+---
+sensor_msgs/PointCloud2 meshcloud

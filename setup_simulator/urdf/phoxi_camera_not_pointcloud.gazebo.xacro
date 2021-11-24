@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- <xacro:include filename="$(find denso_descriptions)/common_description/common.xacro" />
+  <xacro:include filename="$(find denso_descriptions)/phoxi_camera_description/phoxi_camera_value.urdf.xacro" /> -->
+  <xacro:include filename="$(find setup_simulator)/urdf/common.xacro" />
+  <xacro:include filename="$(find setup_simulator)/urdf/phoxi_camera_description/phoxi_camera_value.urdf.xacro" />
+
+  <xacro:macro name="photoneo_gazebo" params="sensor_link_name size">
+   
+    <gazebo reference="${sensor_link_name}">
+      
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <material>Gazebo/Black</material>
+
+      <sensor type="depth" name="${sensor_link_name}_sensor">
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <camera>
+          <horizontal_fov>${84.1*M_PI/180.0}</horizontal_fov>
+          <image>
+            <format>L8</format>
+            <!-- fdfd -->
+            <!-- <format>R8G8B8</format> -->
+            <width>2064</width>
+            <height>1544</height>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>4.5</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <plugin name="${sensor_link_name}_sensor_controller" filename="libgazebo_ros_camera.so">
+          <cameraName>${sensor_link_name}/sensor</cameraName>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>30</updateRate>
+          <imageTopicName>image_color</imageTopicName>
+          <!-- <depthImageTopicName>image_depth</depthImageTopicName> -->
+          <!-- <pointCloudTopicName>points</pointCloudTopicName> -->
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <!-- <depthImageCameraInfoTopicName>camera_info</depthImageCameraInfoTopicName> -->
+          <frameName>${sensor_link_name}_optical_frame</frameName>
+          <baseline>0.1</baseline>
+          <distortion_k1>-0.11862627596824302</distortion_k1>
+          <distortion_k2>0.1330449495758574</distortion_k2>
+          <distortion_k3>0.0</distortion_k3>
+          <distortion_t1>0.0012978747886444077</distortion_t1>
+          <distortion_t2>-0.002273816413316873</distortion_t2>
+          <focalLength>2293.3324879074394</focalLength>
+          <hackBaseline>0.0</hackBaseline>
+          <Cx>1041.4935095434566</Cx>
+          <Cy>857.6330096952366</Cy>
+          <!-- <pointCloudCutoff>0.05</pointCloudCutoff>
+          <pointCloudCutoffMax>4.5</pointCloudCutoffMax> -->
+        </plugin>
+      </sensor>
+      <!-- uttur -->
+      
+    </gazebo>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/>
+    <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/>
+    <arg name="target_frame" default="HV8"/>
+    <arg name="source_frame" default="photoneo_center_optical_frame"/>
+    <arg name="f_scale" default="0.5"/>
+    <arg name="cx_scale" default="0.99"/>
+    <arg name="cy_scale" default="0.9"/>
+    <arg name="radious" default="0.05"/>
+    <arg name="image_dir_name" default="/home/ericlab/yolo_annotation/11_6/images"/>
+    <arg name="filebasename" default="tsuchida"/>
+    <arg name="model_name" default="HV8"/>
+    <arg name="world_frame" default="base_link"/>
+    <arg name="label_dir_name" default="/home/ericlab/yolo_annotation/11_6/labels"/>
+    <arg name="boxes_dir_name" default="/home/ericlab/yolo_annotation/11_6/boxes"/>
+    <arg name="the_number_of_data" default="2000"/>
+    <arg name="service_name" default="message_service"/>
+    <arg name="occuluder_service_name" default="tsuchida_oculution_service"/>
+
+    <!-- <arg name="phoxi_z" value="2"/> -->
+    <arg name="model" value="$(find setup_simulator)/urdf/phoxi_camera_only.urdf.gazebo.xacro"/>
+    <arg name="task_name" default="yolo"/>
+    <group if="$(eval task_name=='yolo_cafe_not_table')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find setup_simulator)/world/yolo_cafe.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+        </include>
+        <!-- <arg name="phoxi_z" value="1.17"/> -->
+        <arg name="z_position" value="0.17"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" output="screen" args="-param robot_description -urdf -model phoxi_camera -z 1" />
+        <node pkg="yolo_annotation" type="move_service_object.py" name="move_object_yolo">
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="z_zahyou" value="$(arg z_position)"/>
+        </node>
+        <node pkg="yolo_annotation" type="yolo_annotation_kai_all_HV8" name="colored_pointcloud11" output="screen">
+            <!-- <param name="camera_topic_name" value="$(arg camera_topic_name)"/> -->
+            <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+            <param name="image_topic_name" value="$(arg image_topic_name)"/>
+            <param name="target_frame" value="$(arg target_frame)"/>
+            <param name="source_frame" value="$(arg source_frame)"/>
+            <param name="f_scale" value="$(arg f_scale)"/>
+            <param name="cx_scale" value="$(arg cx_scale)"/>
+            <param name="cy_scale" value="$(arg cy_scale)"/>
+            <param name="radious" value="$(arg radious)"/>
+            <param name="image_dir_name" value="$(arg image_dir_name)"/>
+            <param name="filebasename" value="$(arg filebasename)"/>
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="world_frame" value="$(arg world_frame)"/>
+            <param name="label_dir_name" value="$(arg label_dir_name)"/>
+            <param name="boxes_dir_name" value="$(arg boxes_dir_name)"/>
+            <param name="the_number_of_data" value="$(arg the_number_of_data)"/>
+            <param name="message_service_name" value="$(arg service_name)"/>
+            <param name="occuluder_service_name" value="$(arg occuluder_service_name)"/>
+            <param name="z_position" value="$(arg z_position)"/>
+        </node>
+    
+    </group>
+     <group if="$(eval task_name=='yolo_cafe_table')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find setup_simulator)/world/yolo_cafe_table.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+        </include>
+        <!-- <arg name="phoxi_z" value="2"/> -->
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+        <arg name="z_position" value="1.0"/>
+        
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" output="screen" args="-param robot_description -urdf -model phoxi_camera -z 2" />
+        <node pkg="yolo_annotation" type="move_service_object.py" name="move_object_yolo">
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="z_zahyou" value="$(arg z_position)"/>
+        </node>
+        <node pkg="yolo_annotation" type="yolo_annotation_kai_all_HV8" name="colored_pointcloud11" output="screen">
+            <!-- <param name="camera_topic_name" value="$(arg camera_topic_name)"/> -->
+            <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+            <param name="image_topic_name" value="$(arg image_topic_name)"/>
+            <param name="target_frame" value="$(arg target_frame)"/>
+            <param name="source_frame" value="$(arg source_frame)"/>
+            <param name="f_scale" value="$(arg f_scale)"/>
+            <param name="cx_scale" value="$(arg cx_scale)"/>
+            <param name="cy_scale" value="$(arg cy_scale)"/>
+            <param name="radious" value="$(arg radious)"/>
+            <param name="image_dir_name" value="$(arg image_dir_name)"/>
+            <param name="filebasename" value="$(arg filebasename)"/>
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="world_frame" value="$(arg world_frame)"/>
+            <param name="label_dir_name" value="$(arg label_dir_name)"/>
+            <param name="boxes_dir_name" value="$(arg boxes_dir_name)"/>
+            <param name="the_number_of_data" value="$(arg the_number_of_data)"/>
+            <param name="message_service_name" value="$(arg service_name)"/>
+            <param name="occuluder_service_name" value="$(arg occuluder_service_name)"/>
+            <param name="z_position" value="$(arg z_position)"/>
+        </node>
+    
+    </group>
+    <group if="$(eval task_name=='yolo_not_table')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find setup_simulator)/world/yolo_iroiro.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+        </include>
+        <!-- <arg name="phoxi_z" value="1"/> -->
+        <arg name="z_position" value="0"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" output="screen" args="-param robot_description -urdf -model phoxi_camera -z 1" />
+         <node pkg="yolo_annotation" type="move_service_object.py" name="move_object_yolo">
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="z_zahyou" value="$(arg z_position)"/>
+        </node>
+        <node pkg="yolo_annotation" type="yolo_annotation_kai_all_HV8" name="colored_pointcloud11" output="screen">
+            <!-- <param name="camera_topic_name" value="$(arg camera_topic_name)"/> -->
+            <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+            <param name="image_topic_name" value="$(arg image_topic_name)"/>
+            <param name="target_frame" value="$(arg target_frame)"/>
+            <param name="source_frame" value="$(arg source_frame)"/>
+            <param name="f_scale" value="$(arg f_scale)"/>
+            <param name="cx_scale" value="$(arg cx_scale)"/>
+            <param name="cy_scale" value="$(arg cy_scale)"/>
+            <param name="radious" value="$(arg radious)"/>
+            <param name="image_dir_name" value="$(arg image_dir_name)"/>
+            <param name="filebasename" value="$(arg filebasename)"/>
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="world_frame" value="$(arg world_frame)"/>
+            <param name="label_dir_name" value="$(arg label_dir_name)"/>
+            <param name="boxes_dir_name" value="$(arg boxes_dir_name)"/>
+            <param name="the_number_of_data" value="$(arg the_number_of_data)"/>
+            <param name="message_service_name" value="$(arg service_name)"/>
+            <param name="occuluder_service_name" value="$(arg occuluder_service_name)"/>
+            <param name="z_position" value="$(arg z_position)"/>
+        </node>
+    
+    </group>
+    <group if="$(eval task_name=='yolo_table')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find setup_simulator)/world/yolo_table_iroiro.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+        </include>
+        <!-- <arg name="phoxi_z" value="2"/> -->
+        <arg name="z_position" value="1.0"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" output="screen" args="-param robot_description -urdf -model phoxi_camera -z 2" />
+        <node pkg="yolo_annotation" type="move_service_object.py" name="move_object_yolo">
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="z_zahyou" value="$(arg z_position)"/>
+        </node>
+        <node pkg="yolo_annotation" type="yolo_annotation_kai_all_HV8" name="colored_pointcloud11" output="screen">
+            <!-- <param name="camera_topic_name" value="$(arg camera_topic_name)"/> -->
+            <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+            <param name="image_topic_name" value="$(arg image_topic_name)"/>
+            <param name="target_frame" value="$(arg target_frame)"/>
+            <param name="source_frame" value="$(arg source_frame)"/>
+            <param name="f_scale" value="$(arg f_scale)"/>
+            <param name="cx_scale" value="$(arg cx_scale)"/>
+            <param name="cy_scale" value="$(arg cy_scale)"/>
+            <param name="radious" value="$(arg radious)"/>
+            <param name="image_dir_name" value="$(arg image_dir_name)"/>
+            <param name="filebasename" value="$(arg filebasename)"/>
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="world_frame" value="$(arg world_frame)"/>
+            <param name="label_dir_name" value="$(arg label_dir_name)"/>
+            <param name="boxes_dir_name" value="$(arg boxes_dir_name)"/>
+            <param name="the_number_of_data" value="$(arg the_number_of_data)"/>
+            <param name="message_service_name" value="$(arg service_name)"/>
+            <param name="occuluder_service_name" value="$(arg occuluder_service_name)"/>
+            <param name="z_position" value="$(arg z_position)"/>
+        </node>
+    
+    </group>
+    <group if="$(eval task_name=='yolo')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find setup_simulator)/world/yolo_tameshi.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+        </include>
+        <arg name="z_position" value="0"/>
+        <!-- <arg name="phoxi_z" value="1"/> -->
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" output="screen" args="-param robot_description -urdf -model phoxi_camera -z 1" />
+        <node pkg="yolo_annotation" type="move_service_object.py" name="move_object_yolo">
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="z_zahyou" value="$(arg z_position)"/>
+        </node>
+        <node pkg="yolo_annotation" type="yolo_annotation_kai_all_HV8" name="colored_pointcloud11" output="screen">
+            <!-- <param name="camera_topic_name" value="$(arg camera_topic_name)"/> -->
+            <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+            <param name="image_topic_name" value="$(arg image_topic_name)"/>
+            <param name="target_frame" value="$(arg target_frame)"/>
+            <param name="source_frame" value="$(arg source_frame)"/>
+            <param name="f_scale" value="$(arg f_scale)"/>
+            <param name="cx_scale" value="$(arg cx_scale)"/>
+            <param name="cy_scale" value="$(arg cy_scale)"/>
+            <param name="radious" value="$(arg radious)"/>
+            <param name="image_dir_name" value="$(arg image_dir_name)"/>
+            <param name="filebasename" value="$(arg filebasename)"/>
+            <param name="model_name" value="$(arg model_name)"/>
+            <param name="world_frame" value="$(arg world_frame)"/>
+            <param name="label_dir_name" value="$(arg label_dir_name)"/>
+            <param name="boxes_dir_name" value="$(arg boxes_dir_name)"/>
+            <param name="the_number_of_data" value="$(arg the_number_of_data)"/>
+            <param name="message_service_name" value="$(arg service_name)"/>
+            <param name="occuluder_service_name" value="$(arg occuluder_service_name)"/>
+            <param name="z_position" value="$(arg z_position)"/>
+        </node>
+    
+    </group>
+    <arg name="pi" default="3.141592"/>
+    
+    <arg name="use_sensor_type" default="phoxi_camera"/>
+    <arg name="gui" default="true"/>
+    <param name="use_gui" value="$(arg gui)"/>
+    
+    
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find setup_simulator)/rviz/denso.rviz" required="true" />
+    
+    
+    
+    
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
+    <rosparam file="$(find setup_simulator)/config/ur3e_gripper.yaml" command="load"/>
+    <node pkg="controller_manager" type="controller_manager" name="ros_controller_manager" respawn="false" output="screen" args="spawn arm_controller gripper"/>
+    <rosparam file="$(find setup_simulator)/config/joint_state_controller.yaml" command="load"/>
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
+    <node pkg="setup_simulator" type="arm_control.py" name="arm_control" />
+
+    <node pkg="setup_simulator" type="tf_publisher" name="tf_publish" />
+    <arg name="sub_topic_name" default="/photoneo_center/sensor/points"/>
+    <arg name="distance_threshold" default="0.001"/>
+    
+    <!-- <node pkg="setup_simulator" type="cloud_planar_segmenter" name="cloud_planar_segmenter">
+        <param name="sub_topic_name" value="$(arg sub_topic_name)"/>
+        <param name="distance_threshold" value="$(arg distance_threshold)"/>
+    </node> -->
+
+
+
+
+
+
+<!-- 
+    <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/>
+    <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/>
+    <arg name="target_frame" default="HV8"/>
+    <arg name="source_frame" default="photoneo_center_optical_frame"/>
+    <arg name="f_scale" default="0.5"/>
+    <arg name="cx_scale" default="0.99"/>
+    <arg name="cy_scale" default="0.9"/>
+    <arg name="radious" default="0.05"/>
+    <arg name="image_dir_name" default="/home/ericlab/yolo_ganbare/images"/>
+    <arg name="filebasename" default="tsuchida"/>
+    <arg name="model_name" default="HV8"/>
+    <arg name="world_frame" default="base_link"/>
+    <arg name="label_dir_name" default="/home/ericlab/yolo_ganbare/labels"/>
+    <arg name="boxes_dir_name" default="/home/ericlab/yolo_ganbare/boxes"/>
+    <arg name="the_number_of_data" default="10"/>
+    <arg name="service_name" default="message_service"/>
+    <arg name="occuluder_service_name" default="tsuchida_oculution_service"/> -->
+    
+    
+    
+    
+   
+    <!-- <node pkg="yolo_annotation" type="move_object_yolo_kai.py" name="move_object_yolo">
+        <param name="model_name" value="$(arg model_name)"/>
+    </node> -->
+
+    <node pkg="yolo_annotation" type="message_casher" name="message_casher" output="screen">
+        <param name="image_topic" value="$(arg image_topic_name)"/>
+        <param name="camera_info_topic" value="$(arg camera_topic_name)"/>
+        <param name="service_name" value="$(arg service_name)"/>
+    </node>
+</launch>

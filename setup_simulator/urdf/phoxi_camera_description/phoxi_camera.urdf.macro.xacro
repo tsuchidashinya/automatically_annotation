@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find setup_simulator)/urdf/common.xacro" />
+  <xacro:include filename="$(find setup_simulator)/urdf/phoxi_camera_description/phoxi_camera_value.urdf.xacro" />
+
+  <xacro:macro name="phoxi_camera_default_sensor_origin" params="size">
+    <xacro:load_sensor_config size="${size}" />
+    <origin xyz="${sensor_x} ${sensor_y} ${sensor_z}" rpy="0 ${M_PI/2} ${sensor_yaw}" />
+  </xacro:macro>
+  <xacro:macro name="phoxi_camera_default_camera_origin" params="size">
+    <xacro:load_camera_config size="${size}" />
+    <origin xyz="${camera_x} ${camera_y} ${camera_z}" rpy="0 ${M_PI/2} ${camera_yaw}" />
+  </xacro:macro>
+  <xacro:macro name="phoxi_camera_default_sensor_mass" params="size">
+    <xacro:load_sensor_mass size="${size}" />
+    <mass value="${sensor_mass}" />
+  </xacro:macro>
+  <xacro:macro name="phoxi_camera_visual" params="size">
+    <mesh filename="package://setup_simulator/urdf/phoxi_camera_description/meshes/visual/PhoXi_${size}.f.STL" scale="0.001 0.001 0.001" />
+  </xacro:macro>
+  <xacro:macro name="phoxi_camera_collision" params="size">
+    <mesh filename="package://setup_simulator/urdf/phoxi_camera_description/meshes/collision/PhoXi_${size}.c.STL" scale="0.001 0.001 0.001" />
+  </xacro:macro>
+</robot>

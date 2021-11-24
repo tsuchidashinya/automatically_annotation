@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+    <model name="HV6">
+        <pose>0 0 0 0 0 0</pose>
+        <static>true</static>
+        <link name="HV6">
+            <collision name="collr">
+                <geometry>
+                    <mesh>
+                        <uri>model://HV6/meshes/HV6_1.stl</uri>
+                    </mesh>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://HV6/meshes/HV6_1.stl</uri>
+                    </mesh>   
+                </geometry>
+            </visual>
+        </link>
+    </model>
+</sdf>

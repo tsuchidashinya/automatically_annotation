@@ -1,0 +1,7 @@
+# std_msgs/Int32MultiArray[] out_data
+denso_msgs/new_1_array[] out_data
+std_msgs/Int32MultiArray[] Bbox_data
+sensor_msgs/Image output_img
+sensor_msgs/Image input_img
+---
+bool complete

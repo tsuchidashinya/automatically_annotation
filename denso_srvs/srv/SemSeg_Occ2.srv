@@ -1,0 +1,4 @@
+tuple[] out_data
+sensor_msgs/Image input_img
+---
+bool complete

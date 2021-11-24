@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot name="phoxi_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find setup_simulator)/urdf/phoxi_camera_description/phoxi_camera.urdf.xacro"/>
+  <xacro:include filename="$(find setup_simulator)/urdf/phoxi_camera.gazebo.xacro"/>
+  <xacro:include filename="$(find setup_simulator)/urdf/common.xacro"/>
+
+  <xacro:arg name="sensor_size" default="L"/>
+  <xacro:arg name="sensor_parent_frame" default="world"/>
+  <!-- <xacro:arg name="sensor_parent_frame" default="base_link"/> -->
+
+  <xacro:arg name="sensor_frame" default="photoneo_center"/>
+  <xacro:arg name="x" default="1.5" />
+  <xacro:arg name="y" default="0.0" />
+  <xacro:arg name="z" default="1" />
+  <xacro:arg name="roll" default="0.0" />
+  <xacro:arg name="pitch" default="+${M_PI/6}" />
+  <xacro:arg name="yaw" default="+${M_PI}" />
+
+  <!-- <link name="$(arg sensor_parent_frame)"/> -->
+  <!-- <link name="world"/> -->
+  
+
+  <xacro:phoxi_camera_v0 size="$(arg sensor_size)" sensor_parent_link_name="$(arg sensor_parent_frame)" sensor_link_name="$(arg sensor_frame)">
+    <origin xyz="$(arg x) $(arg y) $(arg z)" rpy="$(arg roll) $(arg pitch) $(arg yaw)" />
+  </xacro:phoxi_camera_v0>
+
+  <xacro:photoneo_gazebo sensor_link_name="$(arg sensor_frame)" size="$(arg sensor_size)"/>
+</robot>

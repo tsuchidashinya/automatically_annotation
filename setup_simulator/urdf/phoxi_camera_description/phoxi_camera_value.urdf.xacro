@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="load_sensor_config" params="size">
+    <!-- XS -->
+    <xacro:if value="${size == 'XS'}" >
+      <xacro:property name="sensor_x" value="0.035" scope="parent" />
+      <xacro:property name="sensor_y" value="0.1" scope="parent" />
+      <xacro:property name="sensor_z" value="0.025" scope="parent" />
+      <xacro:property name="sensor_yaw" value="-0.26965337" scope="parent" />
+    </xacro:if>
+    <!-- S -->
+    <xacro:if value="${size == 'S'}" >
+      <xacro:property name="sensor_x" value="0.035" scope="parent" />
+      <xacro:property name="sensor_y" value="${(0.23 / 2.0)}" scope="parent" />
+      <xacro:property name="sensor_z" value="0.0168" scope="parent" />
+      <xacro:property name="sensor_yaw" value="-0.26965337" scope="parent" />
+    </xacro:if>
+    <!-- M -->
+    <xacro:if value="${size == 'M'}" >
+      <xacro:property name="sensor_x" value="0.035" scope="parent" />
+      <xacro:property name="sensor_y" value="${(0.350 / 2.0)}" scope="parent"/>
+      <xacro:property name="sensor_z" value="0.0168" scope="parent" />
+      <xacro:property name="sensor_yaw" value="-0.20507619" scope="parent" />
+    </xacro:if>
+    <!-- L -->
+    <xacro:if value="${size == 'L'}" >
+      <xacro:property name="sensor_x" value="0.035" scope="parent" />
+      <xacro:property name="sensor_y" value="${(0.55 / 2.0)}" scope="parent" />
+      <xacro:property name="sensor_z" value="0.0168" scope="parent" />
+      <xacro:property name="sensor_yaw" value="-0.1649336" scope="parent" />
+    </xacro:if>
+    <!-- XL -->
+    <xacro:if value="${size == 'XL'}" >
+      <xacro:property name="sensor_x" value="0.035" scope="parent" />
+      <xacro:property name="sensor_y" value="${(0.850 / 2.0)}" scope="parent" />
+      <xacro:property name="sensor_z" value="0.0168" scope="parent" />
+      <xacro:property name="sensor_yaw" value="-0.1309" scope="parent" />
+    </xacro:if>
+  </xacro:macro>
+  <xacro:macro name="load_camera_config" params="size">
+    <!-- XS -->
+    <xacro:if value="${size == 'XS'}" >
+      <xacro:property name="camera_x" value="0.035" scope="parent" /> <!-- unknown parameter -->
+      <xacro:property name="camera_y" value="0.1" scope="parent" /> <!-- unknown parameter -->
+      <xacro:property name="camera_z" value="0.025" scope="parent" /> <!-- unknown parameter -->
+      <xacro:property name="camera_yaw" value="-0.26965337" scope="parent" /> <!-- unknown parameter -->
+    </xacro:if>
+    <!-- S -->
+    <xacro:if value="${size == 'S'}" >
+      <xacro:property name="camera_x" value="0.035" scope="parent" />
+      <xacro:property name="camera_y" value="-${(0.23 / 2.0)}" scope="parent" />
+      <xacro:property name="camera_z" value="0.0168" scope="parent" />
+      <xacro:property name="camera_yaw" value="0.26965337" scope="parent" />
+    </xacro:if>
+    <!-- M -->
+    <xacro:if value="${size == 'M'}" >
+      <xacro:property name="camera_x" value="0.035" scope="parent" />
+      <xacro:property name="camera_y" value="-${(0.350 / 2.0)}" scope="parent" />
+      <xacro:property name="camera_z" value="0.0168" scope="parent" />
+      <xacro:property name="camera_yaw" value="0.20507619" scope="parent" />
+    </xacro:if>
+    <!-- L -->
+    <xacro:if value="${size == 'L'}" >
+      <xacro:property name="camera_x" value="0.035" scope="parent" />
+      <xacro:property name="camera_y" value="-${(0.55 / 2.0)}" scope="parent" />
+      <xacro:property name="camera_z" value="0.0168" scope="parent" />
+      <xacro:property name="camera_yaw" value="0.1649336" scope="parent" />
+    </xacro:if>
+    <!-- XL -->
+    <xacro:if value="${size == 'XL'}" >
+      <xacro:property name="camera_x" value="0.035" scope="parent" />
+      <xacro:property name="camera_y" value="-${(0.850 / 2.0)}" scope="parent" />
+      <xacro:property name="camera_z" value="0.0168" scope="parent" />
+      <xacro:property name="camera_yaw" value="0.1309" scope="parent" />
+    </xacro:if>
+  </xacro:macro>
+  <xacro:macro name="load_sensor_mass" params="size">
+    <!-- XS -->
+    <xacro:if value="${size == 'XS'}" >
+      <xacro:property name="sensor_mass" value="0.9" scope="parent" />
+    </xacro:if>
+    <!-- S -->
+    <xacro:if value="${size == 'S'}" >
+      <xacro:property name="sensor_mass" value="0.9" scope="parent" />
+    </xacro:if>
+    <!-- M -->
+    <xacro:if value="${size == 'M'}" >
+      <xacro:property name="sensor_mass" value="0.95" scope="parent" />
+    </xacro:if>
+    <!-- L -->
+    <xacro:if value="${size == 'L'}" >
+      <xacro:property name="sensor_mass" value="1.1" scope="parent" />
+    </xacro:if>
+    <!-- XL -->
+    <xacro:if value="${size == 'XL'}" >
+      <xacro:property name="sensor_mass" value="1.2" scope="parent" />
+    </xacro:if>
+  </xacro:macro>
+</robot>
