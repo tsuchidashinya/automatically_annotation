@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="num_of_object" default="7"/>
+    <arg name="sensor_topic_name" default="output"/>
+    <arg name="mesh_base_topic_name" default="meshcloud"/>
+    <arg name="output_topic_name_1" default="all_cloud"/>
+    <arg name="radius" default="10000"/>
+    <arg name="num_of_nearest_points" default="8"/>
+    <arg name="background_instance" default="300"/>
+    <arg name="message_timeout" default="15"/>
+    <arg name="dulation" default="0.1"/>
+    <arg name="oculuder_kiriwake_topic_name" default="tsuchida_object_occuluder"/>
+    <arg name="source_frame" default="base_link"/>
+    
+    <node name="nearest_search_bara3" pkg="semantic_annotation" type="nearest_point_search"  output="screen" respawn="false" respawn_delay="0">
+        <param name="num_of_object" value="$(arg num_of_object)"/>
+        <param name="sensor_topic_name" value="$(arg sensor_topic_name)"/>
+        <param name="mesh_base_topic_name" value="$(arg mesh_base_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name_1)"/>
+        <param name="radius" value="$(arg radius)"/>
+        <param name="num_of_nearest_points" value="$(arg num_of_nearest_points)"/>
+        <param name="message_timeout" value="$(arg message_timeout)"/>
+        <param name="background_instance" value="$(arg background_instance)"/>
+        <param name="dulation" value="$(arg dulation)"/>
+        <param name="oculuder_kiriwake_topic_name" value="$(arg oculuder_kiriwake_topic_name)"/>
+        <param name="source_frame" value="$(arg source_frame)"/>
+    </node>
+
+    <arg name="receive_topic_name" default="all_cloud"/>
+    <arg name="output_topic_name_2" default="tsuchida_cloud"/>
+    <arg name="frame_id" default="photoneo_center_optical_frame"/>
+    
+    <node pkg="semantic_annotation" type="visualize_pointcloud" name="dummy_2_semantic" output="screen">
+        <param name="receive_topic_name" value="$(arg receive_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name_2)"/>
+        <param name="frame_id" value="$(arg frame_id)"/>    
+    </node>
+
+    <arg name="sample_points" default="20000"/>
+    <arg name="LEAF_SIZE" default="0.0003"/>
+    <arg name="RETRY_COUNT_LIMIT" default="10"/>
+    <arg name="DURATION_TIME" default="0.1"/>
+    <arg name="object_name" default="HV8"/>
+    <arg name="the_number_of_object" default="31"/>
+    <arg name="mesh_path" default="$(find annotation_package)/mesh/HV8.stl"/>
+    
+    
+    <node name="mesh_bara_publisher" pkg="semantic_annotation" type="mesh_cloud_publisher"  output="screen">
+        <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+        <param name="sample_points" value="$(arg sample_points)"/>
+        <param name="LEAF_SIZE" value="$(arg LEAF_SIZE)"/>
+        <param name="RETRY_COUNT_LIMIT" value="$(arg RETRY_COUNT_LIMIT)"/>
+        <param name="DURATION_TIME" value="$(arg DURATION_TIME)"/>
+        <param name="mesh_path" value="$(arg mesh_path)"/>
+        <param name="source_frame" value="$(arg source_frame)"/>
+    </node>
+
+    <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/>
+    <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/>
+    <arg name="inputcloud_topic_name" default="/cloud_without_segmented"/>
+    <arg name="output_topic_name_3" default="/output"/>
+    <arg name="target_frame" default="HV8"/>
+    <arg name="source_frame_1" default="photoneo_center_optical_frame"/>
+    <arg name="model_name" default="HV8"/>
+    <arg name="world_frame" default="base_link"/>
+    <arg name="f_scale" default="0.5"/>
+    <arg name="cx_scale" default="0.99"/>
+    <arg name="cy_scale" default="0.9"/>
+    <arg name="radious" default="0.05"/>
+    <arg name="oculuder_topic_name" default="/tsuchida_object_occuluder"/>
+    <arg name="timespan" default="4"/>
+    
+    <node name="colored_point" pkg="semantic_annotation" type="box_extract_3d" output="screen">
+        <param name="camera_topic_name" value="$(arg camera_topic_name)"/>
+        <param name="image_topic_name" value="$(arg image_topic_name)"/>
+        <param name="inputcloud_topic_name" value="$(arg inputcloud_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name_3)"/>
+        <param name="target_frame" value="$(arg target_frame)"/>
+        <param name="source_frame" value="$(arg source_frame_1)"/>
+        <param name="model_name" value="$(arg model_name)"/>
+        <param name="world_frame" value="$(arg world_frame)"/>
+        <param name="f_scale" value="$(arg f_scale)"/>
+        <param name="cx_scale" value="$(arg cx_scale)"/>
+        <param name="cy_scale" value="$(arg cy_scale)"/>
+        <param name="radious" value="$(arg radious)"/>
+        <param name="dulation" value="$(arg dulation)"/>
+        <param name="oculuder_topic_name" value="$(arg oculuder_topic_name)"/>
+        <param name="timespan" value="$(arg timespan)"/>
+    </node>
+
+    <node pkg="semantic_annotation" type="move_object.py" name="move_object" />
+
+    <arg name="filepath" default="occulution_kiriwake"/>
+    <arg name="sub_topic_name" default="all_cloud"/>
+    <arg name="num_dataset" default="1000"/>
+    <arg name="directorypath" default="/home/ericlab/hdf5_oculution/"/>
+    <arg name="data_number" default="1"/>
+  
+    <node pkg="semantic_annotation" type="record_segmentation_data.py" name="record_hdf5_kiriwake" output="screen">
+        <param name="filepath" value="$(arg filepath)"/>
+        <param name="num_dataset" value="$(arg num_dataset)"/>
+        <param name="directorypath" value="$(arg directorypath)"/>
+        <param name="sub_topic_name" value="$(arg sub_topic_name)"/>
+        <param name="data_number" value="$(arg data_number)"/>
+    </node>
+
+</launch>

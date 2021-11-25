@@ -59,17 +59,5 @@ target_link_libraries(message_casher
   ${catkin_LIBRARIES}
 )
 
-add_executable(sensor_move_try src/sensor_move_try.cpp)
-target_link_libraries(sensor_move_try
-  ${catkin_LIBRARIES}
-)
 
-add_executable(sensor_service_move src/sensor_service_move.cpp)
-target_link_libraries(sensor_service_move
-  ${catkin_LIBRARIES}
-)
 
-add_executable(sensor_angle_move src/sensor_angle_move.cpp)
-target_link_libraries(sensor_angle_move
-  ${catkin_LIBRARIES}
-)
