@@ -9,4 +9,4 @@
 
 シミュレータを用いると物体の3次元座標の正しい値を取得することができる。その3次元データから下の図のような幾何学変換を用いて、画像中の座標データに変換することでバウンディングボックスを囲んでいる。
 
-<img src="https://github.com/tsuchidashinya/automatically_annotation/blob/main/video/image_1.png"></img>
+<img src="https://github.com/tsuchidashinya/automatically_annotation/blob/main/video/image_1.png" width="300px" height="300px"></img>
