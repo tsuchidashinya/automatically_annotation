@@ -19,3 +19,5 @@ roslaunch yolo_annotation kai_yolo_annotation_all_HV8.launch
 ```
 
 ## 点群のセマンティックセグメンテーションを行うアノテーション
+<p align="center">
+<img src="https://github.com/tsuchidashinya/automatically_annotation/blob/main/video/output_1.gif"></img></p>
